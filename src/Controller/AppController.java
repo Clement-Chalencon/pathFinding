@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.CoreAlgorithms;
+import Model.Core;
 import View.PFLayout;
 
 import javax.swing.*;
@@ -12,12 +12,12 @@ public class AppController extends AbstractAction {
 
     private int mapSize = 3;
     private int mapNumber = 0;
-    private CoreAlgorithms algos;
+    private Core algos;
 
     public AppController(PFLayout pfLayout, String action){
         super(action);
         this.pfLayout = pfLayout;
-        this.algos = new CoreAlgorithms();
+        this.algos = new Core();
     }
 
     @Override
@@ -34,11 +34,11 @@ public class AppController extends AbstractAction {
                 mapNumber++;
             }
             System.out.println("Map taille: "+ mapSize +" N°"+ mapNumber);
-            this.pfLayout.getPanelMap().getMap().initCellList(mapSize, mapNumber);
+            this.pfLayout.getPanelMap().getMap().initMaze(mapSize, mapNumber);
             this.pfLayout.repaint();
         } else if (e.getActionCommand() == "Launch"){
 //            this.pfLayout.getPanelMap().getMap().setCellList(this.algos.LeftHAnd(this.pfLayout.getPanelMap().getMap().getCellList()));
-            this.pfLayout.getPanelMap().getMap().setCellList(this.algos.depthFirst(this.pfLayout.getPanelMap().getMap().getCellList()));
+            this.pfLayout.getPanelMap().getMap().setMaze(this.algos.depthBreadthSolve(this.pfLayout.getPanelMap().getMap().getMaze()));
             this.pfLayout.repaint();
         }
 

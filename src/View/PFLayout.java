@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class PFLayout extends JFrame {
 
-    PanelMap panelMap;
+    PanelMaze panelMaze;
     PanelBackground panelBackground;
 
     private final int WIDTH = 1650;
@@ -22,7 +22,7 @@ public class PFLayout extends JFrame {
         this.setLocation(2000, 20);
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.panelMap = new PanelMap();
+        this.panelMaze = new PanelMaze();
         this.panelBackground = new PanelBackground();
 
         buildLayout();
@@ -54,10 +54,10 @@ public class PFLayout extends JFrame {
 
 
         //potitionnement du Panel Map
-        springLayout.putConstraint(SpringLayout.NORTH, this.panelMap, MY, SpringLayout.NORTH, mainContainer);
-        springLayout.putConstraint(SpringLayout.WEST, this.panelMap, MX, SpringLayout.WEST, mainContainer);
-        springLayout.putConstraint(SpringLayout.SOUTH, this.panelMap, -MY, SpringLayout.SOUTH, mainContainer);
-        springLayout.putConstraint(SpringLayout.EAST, this.panelMap, -312, SpringLayout.EAST, mainContainer);
+        springLayout.putConstraint(SpringLayout.NORTH, this.panelMaze, MY, SpringLayout.NORTH, mainContainer);
+        springLayout.putConstraint(SpringLayout.WEST, this.panelMaze, MX, SpringLayout.WEST, mainContainer);
+        springLayout.putConstraint(SpringLayout.SOUTH, this.panelMaze, -MY, SpringLayout.SOUTH, mainContainer);
+        springLayout.putConstraint(SpringLayout.EAST, this.panelMaze, -312, SpringLayout.EAST, mainContainer);
 
         //positionnement des boutons
         springLayout.putConstraint(SpringLayout.NORTH, runAlgoBtn, MY, SpringLayout.NORTH, mainContainer);
@@ -75,13 +75,13 @@ public class PFLayout extends JFrame {
         mainContainer.add(generateMapBtn);
         mainContainer.add(chooseStartBtn);
         mainContainer.add(chooseFinishBtn);
-        mainContainer.add(panelMap);
+        mainContainer.add(panelMaze);
         mainContainer.add(panelBackground);
 
 
     }
 
-    public PanelMap getPanelMap() {
-        return panelMap;
+    public PanelMaze getPanelMap() {
+        return panelMaze;
     }
 }

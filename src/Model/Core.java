@@ -3,61 +3,31 @@ package Model;
 import java.util.ArrayList;
 
 
-public class CoreAlgorithms {
+public class Core {
 
     // ENUMS
+    public enum Algo {LEFTHAND, RIGHTHAND, DEPTH}
     public enum Orientation {LOOK_NORTH, LOOK_SOUTH, LOOK_EAST, LOOK_WEST}
-
     public enum Direction {LEFT, FORWARD}
 
     // Attributs
     private Orientation position = Orientation.LOOK_EAST;
     private int count;
 
-    public ArrayList<Cell> depthFirst(ArrayList<Cell> maze) {
-        maze.get(maze.size() - 1).getType();
+    public ArrayList<Cell> depthBreadthSolve(ArrayList<Cell> maze) {
         if(explore(0, maze))maze.get(maze.size()-1).setWalked(true);
         maze.get(0).setWalked(false);
         return maze;
     }
+
     private boolean explore(int i, ArrayList<Cell> maze) {
         if (i == maze.size() - 1) return true;
         if (maze.get(i).isExplored() ) return false;
         maze.get(i).setExplored(true);
-        if (maze.get(i).getPosX() != 0) {
-            if (!maze.get(i).getWalls()[3]) {
-                if (explore(i - 1, maze)) {
-                    maze.get(i).setWalked(true);
-                    System.out.println(i);
-                    return true;
-                }
-            }
-        }
-        if (maze.get(i).getPosX() != ((int) Math.sqrt(maze.size())) - 1) {
-            if (!maze.get(i).getWalls()[1]) {
-                if (explore(i + 1, maze)) {
-                    maze.get(i).setWalked(true);
-                    System.out.println(i);
-                    return true;
-                }
-            }
-        }
-        if (maze.get(i).getPosY() != 0) {
-            if (!maze.get(i).getWalls()[0]) {
-                if (explore(i - ((int) Math.sqrt(maze.size())), maze)) {
-                    maze.get(i).setWalked(true);
-                    System.out.println(i);
-                    return true;
-                }
-            }
-        }
-        if (maze.get(i).getPosY() != ((int) Math.sqrt(maze.size())) - 1) {
-            if (!maze.get(i).getWalls()[2]) {
-                if (explore(i + ((int) Math.sqrt(maze.size())), maze)) {
-                    maze.get(i).setWalked(true);
-                    System.out.println(i);
-                    return true;
-                }
+        for (int j = 0; j<maze.get(i).getConnectedIndexes().size(); j++){
+            if(explore (maze.get(i).getConnectedIndexes().get(j), maze)){
+                maze.get(i).setWalked(true);
+                return true;
             }
         }
         return false;

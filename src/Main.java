@@ -1,4 +1,4 @@
-import View.PanelMap;
+import View.PanelMaze;
 import View.PFLayout;
 
 /**
@@ -11,7 +11,7 @@ import View.PFLayout;
  */
 public class Main {
 
-    PanelMap panelMap;
+    PanelMaze panelMaze;
 
     /**
      * @param args
