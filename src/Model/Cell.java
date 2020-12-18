@@ -11,10 +11,9 @@ public class Cell {
     private boolean isExplored;
     private ArrayList<Boolean> walls = new ArrayList<Boolean>();
     private ArrayList<Integer> connectedIndexes = null;
-    private int cost, eval;
+    private int cost, heuristicCost, finalCost;
 
-
-    public Cell(int x, int y, String type, boolean[] walls){
+    public Cell(int x, int y, String type, boolean[] walls, int cost){
         this.posX = x;
         this.posY = y;
         this.type = type;
@@ -23,8 +22,8 @@ public class Cell {
         for (int i =0; i< walls.length;i++){
             this.walls.add(walls[i]);
         }
-        this.cost = 0;
-        this.eval = 0;
+        this.cost = cost;
+        this.heuristicCost = 0;
     }
 
     // getters
@@ -64,11 +63,19 @@ public class Cell {
         return cost;
     }
 
-    public int getEval() {
-        return eval;
+    public int getHeuristicCost() {
+        return heuristicCost;
+    }
+
+    public int getFinalCost() {
+        return finalCost;
     }
 
     //setters
+    public void setWalls(int index, boolean value) {
+        this.walls.set(index, value);
+    }
+
     public void setType(String type) {
         this.type = type;
     }
@@ -89,7 +96,11 @@ public class Cell {
         this.cost = cost;
     }
 
-    public void setEval(int eval) {
-        this.eval = eval;
+    public void setHeuristicCost(int heuristicCost) {
+        this.heuristicCost = heuristicCost;
+    }
+
+    public void setFinalCost(int finalCost) {
+        this.finalCost = finalCost;
     }
 }

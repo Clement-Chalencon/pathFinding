@@ -1,31 +1,93 @@
 package Model;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class Core {
 
     // ENUMS
     public enum Algo {LEFTHAND, RIGHTHAND, DEPTH}
+
     public enum Orientation {LOOK_NORTH, LOOK_SOUTH, LOOK_EAST, LOOK_WEST}
+
     public enum Direction {LEFT, FORWARD}
 
     // Attributs
     private Orientation position = Orientation.LOOK_EAST;
     private int count;
 
+    public ArrayList<Cell> aStar(ArrayList<Cell> maze) {
+        for (int i = 0; i < maze.size(); i++) {
+            int x = maze.get(i).getPosX();
+            int endx = maze.get(maze.size() - 1).getPosX();
+            int y = maze.get(i).getPosY();
+            int endy = maze.get(maze.size() - 1).getPosY();
+            maze.get(i).setHeuristicCost(Math.abs(x - endx) + Math.abs(y - endy) + maze.get(i).getCost()*500);
+        }
+        int max = 0;
+        int cellIndex = 0;
+        while (cellIndex != maze.size() - 1) {
+            ArrayList<Integer> costList = new ArrayList<>();
+            ArrayList<Integer> indexes = new ArrayList<>();
+            for (int i = 0; i < maze.get(cellIndex).getConnectedIndexes().size(); i++) {
+                costList.add(maze.get(maze.get(cellIndex).getConnectedIndexes().get(i)).getHeuristicCost());
+                System.out.println(maze.get(maze.get(cellIndex).getConnectedIndexes().get(i)).getHeuristicCost());
+                indexes.add((maze.get(cellIndex).getConnectedIndexes().get(i)));
+            }
+            System.out.println("---------------------------");
+            max++;
+            maze.get(cellIndex).setHeuristicCost(max);
+            cellIndex = maze.get(cellIndex).getConnectedIndexes().get(costList.indexOf(Collections.min(costList)));
+            maze.get(cellIndex).setWalked(true);
+        }
+        return maze;
+    }
+
+
+//    public void shortestStar(ArrayList<Cell> maze, int departure, int arrival){
+//        boolean[] closedCells = new boolean[maze.size()];
+//        PriorityQueue<Cell> openCells = new PriorityQueue<Cell>((Cell node1, Cell node2)->{
+//            return node1.getFinalCost() < node2.getFinalCost() ? 1 : node1.getFinalCost() > node2.getFinalCost() ? 1 : 0;
+//        });
+//        for (int i = 0; i<maze.size(); i++){
+//            int x = maze.get(i).getPosX();
+//            int endx = maze.get(maze.size()).getPosX();
+//            int y = maze.get(i).getPosY();
+//            int endy = maze.get(maze.size()).getPosY();
+//            maze.get(i).setHeuristicCost(Math.abs(x-endx)+Math.abs(y-endy));
+//        }
+//        openCells.add(maze.get(0));
+//        Cell current;
+//        while(true){
+//            current = openCells.poll();
+//            if(current == null) break;
+//        }
+//
+//    }
+
+    public int compare2Nodes(Cell node1, Cell node2) {
+        if (node1.getHeuristicCost() < node2.getHeuristicCost()) {
+            return 1;
+        } else if (node1.getHeuristicCost() == node2.getHeuristicCost()) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+
     public ArrayList<Cell> depthBreadthSolve(ArrayList<Cell> maze) {
-        if(explore(0, maze))maze.get(maze.size()-1).setWalked(true);
+        if (explore(0, maze)) maze.get(maze.size() - 1).setWalked(true);
         maze.get(0).setWalked(false);
         return maze;
     }
 
     private boolean explore(int i, ArrayList<Cell> maze) {
         if (i == maze.size() - 1) return true;
-        if (maze.get(i).isExplored() ) return false;
+        if (maze.get(i).isExplored()) return false;
         maze.get(i).setExplored(true);
-        for (int j = 0; j<maze.get(i).getConnectedIndexes().size(); j++){
-            if(explore (maze.get(i).getConnectedIndexes().get(j), maze)){
+        for (int j = 0; j < maze.get(i).getConnectedIndexes().size(); j++) {
+            if (explore(maze.get(i).getConnectedIndexes().get(j), maze)) {
                 maze.get(i).setWalked(true);
                 return true;
             }

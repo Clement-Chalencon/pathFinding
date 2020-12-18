@@ -1,7 +1,6 @@
 package View;
 
 import Controller.AppController;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +12,7 @@ public class PFLayout extends JFrame {
 
     private final int WIDTH = 1650;
     private final int HEIGHT = 1000;
-    private final int MX = 150;
+    private final int MX = 250;
     private final int MY = 60;
 
     public PFLayout() {
@@ -31,27 +30,26 @@ public class PFLayout extends JFrame {
     }
 
     public void buildLayout(){
-
-
         JButton runAlgoBtn = new JButton(new AppController(this,"Launch"));
-        JButton generateMapBtn = new JButton(new AppController(this,"New Map"));
-        JButton chooseStartBtn = new JButton(new AppController(this,"Where to start?"));
-        JButton chooseFinishBtn = new JButton(new AppController(this,"Where to finish?"));
+        JButton nextMap = new JButton(new AppController(this,"Next Map"));
+        JButton previousMap = new JButton(new AppController(this,"Previous Map"));
+        JButton STRMap = new JButton(new AppController(this,"STR Style"));
+
+        JButton algoDPSBFSBtn = new JButton(new AppController(this,"DPS/BFS"));
+        JButton algoLeftHand = new JButton(new AppController(this,"Left Hand"));
 
         Dimension d = new Dimension(130,30);
         runAlgoBtn.setPreferredSize(d);
-        generateMapBtn.setPreferredSize(d);
-        chooseStartBtn.setPreferredSize(d);
-        chooseFinishBtn.setPreferredSize(d);
-
-
+        nextMap.setPreferredSize(d);
+        previousMap.setPreferredSize(d);
+        STRMap.setPreferredSize(d);
+        algoDPSBFSBtn.setPreferredSize(d);
+        algoLeftHand.setPreferredSize(d);
 
         Container mainContainer = getContentPane();
         SpringLayout springLayout = new SpringLayout();
         mainContainer.setLayout(springLayout);
         mainContainer.setBackground(Color.darkGray);
-
-
 
         //potitionnement du Panel Map
         springLayout.putConstraint(SpringLayout.NORTH, this.panelMaze, MY, SpringLayout.NORTH, mainContainer);
@@ -59,26 +57,30 @@ public class PFLayout extends JFrame {
         springLayout.putConstraint(SpringLayout.SOUTH, this.panelMaze, -MY, SpringLayout.SOUTH, mainContainer);
         springLayout.putConstraint(SpringLayout.EAST, this.panelMaze, -312, SpringLayout.EAST, mainContainer);
 
-        //positionnement des boutons
+        //positionnement des boutons - Gauche
         springLayout.putConstraint(SpringLayout.NORTH, runAlgoBtn, MY, SpringLayout.NORTH, mainContainer);
-        springLayout.putConstraint(SpringLayout.WEST, runAlgoBtn, 10, SpringLayout.WEST, mainContainer);
-        springLayout.putConstraint(SpringLayout.WEST, generateMapBtn, 0, SpringLayout.WEST, runAlgoBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, generateMapBtn, 70, SpringLayout.NORTH, runAlgoBtn);
-        springLayout.putConstraint(SpringLayout.WEST, chooseStartBtn, 0, SpringLayout.WEST, generateMapBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, chooseStartBtn, 70, SpringLayout.NORTH, generateMapBtn);
-        springLayout.putConstraint(SpringLayout.WEST, chooseFinishBtn, 0, SpringLayout.WEST, chooseStartBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, chooseFinishBtn, 70, SpringLayout.NORTH, chooseStartBtn);
+        springLayout.putConstraint(SpringLayout.WEST, runAlgoBtn, 50, SpringLayout.WEST, mainContainer);
+        springLayout.putConstraint(SpringLayout.WEST, nextMap, 0, SpringLayout.WEST, runAlgoBtn);
+        springLayout.putConstraint(SpringLayout.NORTH, nextMap, 70, SpringLayout.NORTH, runAlgoBtn);
+        springLayout.putConstraint(SpringLayout.WEST, previousMap, 0, SpringLayout.WEST, nextMap);
+        springLayout.putConstraint(SpringLayout.NORTH, previousMap, 70, SpringLayout.NORTH, nextMap);
+        springLayout.putConstraint(SpringLayout.WEST, STRMap, 0, SpringLayout.WEST, previousMap);
+        springLayout.putConstraint(SpringLayout.NORTH, STRMap, 70, SpringLayout.NORTH, previousMap);
 
-
+        //positionnement des boutons - Droite
+        springLayout.putConstraint(SpringLayout.NORTH, algoDPSBFSBtn, MY, SpringLayout.NORTH, mainContainer);
+        springLayout.putConstraint(SpringLayout.WEST, algoDPSBFSBtn, 1400, SpringLayout.WEST, mainContainer);
+        springLayout.putConstraint(SpringLayout.WEST, algoLeftHand, 0, SpringLayout.WEST, algoDPSBFSBtn);
+        springLayout.putConstraint(SpringLayout.NORTH, algoLeftHand, 70, SpringLayout.NORTH, algoDPSBFSBtn);
 
         mainContainer.add(runAlgoBtn);
-        mainContainer.add(generateMapBtn);
-        mainContainer.add(chooseStartBtn);
-        mainContainer.add(chooseFinishBtn);
+        mainContainer.add(nextMap);
+        mainContainer.add(previousMap);
+        mainContainer.add(STRMap);
+        mainContainer.add(algoDPSBFSBtn);
+        mainContainer.add(algoLeftHand);
         mainContainer.add(panelMaze);
         mainContainer.add(panelBackground);
-
-
     }
 
     public PanelMaze getPanelMap() {
